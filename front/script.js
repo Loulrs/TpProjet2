@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", async function () {
+    const token = localStorage.getItem("token");
+    if(token){
+        window.location.href = '/front/Reussite.html';
+    }
+});
+
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -29,11 +36,17 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         
         if (result.success) {
             messageDiv.textContent = 'Connexion réussie ! Redirection...';
-            window.location.href = '/front/Reussite.html';
+
         } else {
             messageDiv.textContent = 'Identifiants invalides.';
         }
         
+        if (result.token) {
+                //On sauvegarde le token en local
+                localStorage.setItem("token", result.token);
+                window.location.href = '/front/Reussite.html';
+            }
+
     } catch (err) {
         messageDiv.textContent = `Erreur de connexion : ${err}`;
     }

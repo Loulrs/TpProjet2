@@ -34,9 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (result.success) {
                     messageDiv.textContent = "Inscription réussie ! Connecte-toi.";
+                    if(result.token){
+                        localStorage.setItem("token", result.token);
+                    }
                     setTimeout(() => {
                         window.location.href = '/front/index.html';
-                    }, 2000);
+                    }, 500);
                 } else {
                     messageDiv.textContent = result.message || "Erreur lors de l'inscription.";
                 }
