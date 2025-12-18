@@ -98,3 +98,8 @@ a {
 a:hover {
     color: #000;
 }
+
+#logout{
+    width: 150px;
+}
+
