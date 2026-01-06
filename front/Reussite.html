@@ -87,6 +87,7 @@
 
             const a = Number(data.lat);
             const b = Number(data.lng);
+            const c = Date(data.timestamp);
 
             if (Number.isNaN(a) || Number.isNaN(b)) {
                 console.warn('Coordonnées invalides reçues du serveur', data);
@@ -97,10 +98,10 @@
             // Met à jour ou crée le marqueur
             if (lastMarker) {
                 lastMarker.setLatLng([a, b]);
-                lastMarker.setPopupContent(`Latitude : ${a}<br>Longitude : ${b}<br>${new Date(data.timestamp).toLocaleString()}`);
+                lastMarker.setPopupContent(`Latitude : ${a}<br>Longitude : ${b}<br>${c}`);
             } else {
                 lastMarker = L.marker([a, b]).addTo(map)
-                    .bindPopup(`Latitude : ${a}<br>Longitude : ${b}<br>${new Date(data.timestamp).toLocaleString()}`);
+                    .bindPopup(`Latitude : ${a}<br>Longitude : ${b}<br>${c}`);
             }
 
             // Ouvre le popup

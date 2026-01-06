@@ -214,7 +214,7 @@ app.get('/api/positions/last', authMiddleware, (req, res) => {
     }
 
     const sql = `
-        SELECT latitude AS lat, longitude AS lng, Date
+        SELECT latitude AS lat, longitude AS lng, Date as created_at
         FROM GPS
         ORDER BY Date DESC
         LIMIT 1
