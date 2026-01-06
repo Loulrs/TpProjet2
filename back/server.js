@@ -205,6 +205,43 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: 'Erreur serveur interne' });
 });
 
+// Route pour récupérer la dernière position de l'utilisateur connecté
+app.get('/api/positions/last', authMiddleware, (req, res) => {
+    const userId = req.user.sub; // récupéré depuis le token
+
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "Utilisateur non identifié" });
+    }
+
+    const sql = `
+        SELECT latitude AS lat, longitude AS lng, Date
+        FROM GPS
+        ORDER BY Date DESC
+        LIMIT 1
+    `;
+
+    db.query(sql, [userId], (err, results) => {
+        if (err) {
+            console.error("Erreur MySQL :", err);
+            return res.status(500).json({ success: false, message: "Erreur serveur" });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: "Aucune position trouvée" });
+        }
+
+        const pos = results[0];
+
+        return res.json({
+            success: true,
+            lat: pos.lat,
+            lng: pos.lng,
+            timestamp: pos.created_at
+        });
+    });
+});
+
+
 // Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
