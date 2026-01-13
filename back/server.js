@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
 
 // Exemple de route map (à compléter selon besoin)
 app.get('/api/map', (req, res) => {
-  // Récupérer les données GPS depuis la BDD et renvoyer en JSON
+
   res.json({ success: true, data: [] });
 });
 
